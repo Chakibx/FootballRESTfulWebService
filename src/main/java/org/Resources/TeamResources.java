@@ -1,5 +1,6 @@
 package org.Resources;
 
+import com.google.gson.Gson;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.GenericEntity;
@@ -83,11 +84,13 @@ public class TeamResources {
 
     //amethode pour ajouter une équipe
     @POST
-    @Path("/teams")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addTeam(Team team) {
+    public Response addTeam(String json) {
         try {
+            Gson gson = new Gson();
+            Team team = gson.fromJson(json, Team.class);
+
             // Charger le driver JDBC pour MySQL
             Class.forName("com.mysql.jdbc.Driver");
 
@@ -120,8 +123,8 @@ public class TeamResources {
     }
 
     //methode pour affecter un joueur a une equipe
-    @PUT
     @Path("/{teamId}/players/{playerId}")
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addPlayerToTeam(@PathParam("teamId") int teamId, @PathParam("playerId") int playerId) {

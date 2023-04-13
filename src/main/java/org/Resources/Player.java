@@ -11,6 +11,15 @@ public class Player {
         this.teamId = teamId;
     }
 
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", teamId=" + teamId +
+                '}';
+    }
+
     // Getters and Setters
     public int getId() {
         return id;
