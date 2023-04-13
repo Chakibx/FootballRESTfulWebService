@@ -11,8 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Path("/teams")
-@Path("/teams/{id}/players")
+@Path("/teams")
 public class TeamResources {
     private String host = "mysql-globalhumanressources.alwaysdata.net";
     private String base = "globalhumanressources_sports_prediction";
@@ -20,7 +19,8 @@ public class TeamResources {
     private String password = "GHR-2023";
     private String url = "jdbc:mysql://" + host + "/" + base;
 
-    /*@GET
+    //recuperer toutes les equipes
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllTeams() {
        try{
@@ -50,9 +50,10 @@ public class TeamResources {
         } catch (ClassNotFoundException e) {
            throw new RuntimeException(e);
        }
-    }*/
+    }
 
-
+    //methode pour recuperer les joueurs d'une équipe
+    @Path("/{id}/players")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTeamPlayers(@PathParam("id") int teamId) {
@@ -79,7 +80,9 @@ public class TeamResources {
             throw new RuntimeException(e);
         }
     }
-    /*@POST
+
+    //amethode pour ajouter une équipe
+    @POST
     @Path("/teams")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -113,13 +116,12 @@ public class TeamResources {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
 
     //methode pour affecter un joueur a une equipe
     @PUT
-    @Path("/teams/{teamId}/players/{playerId}")
+    @Path("/{teamId}/players/{playerId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addPlayerToTeam(@PathParam("teamId") int teamId, @PathParam("playerId") int playerId) {
@@ -169,7 +171,5 @@ public class TeamResources {
         }
 
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-    }*/
-
-
+    }
 }
