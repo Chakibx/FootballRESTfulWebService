@@ -14,6 +14,15 @@ public class PlayerRequests {
     private int teamId;
     private int id;
 
+    @Override
+    public String toString() {
+        return "PlayerRequests{" +
+                "name='" + name + '\'' +
+                ", teamId=" + teamId +
+                ", id=" + id +
+                '}';
+    }
+
     public String getName() {
         return name;
     }
