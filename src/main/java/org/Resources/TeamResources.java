@@ -1,6 +1,7 @@
 package org.Resources;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.GenericEntity;
@@ -60,20 +61,18 @@ public class TeamResources {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, user, password);
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM teams WHERE team_id = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM teams WHERE id = ?");
             statement.setInt(1, teamId);
             ResultSet resultSet = statement.executeQuery();
 
-            //List<Player> players = new ArrayList<>();
-            //while (resultSet.next()) {
-                //int playerId = resultSet.getInt("id");
+            if (resultSet.next()) {
                 String teamName = resultSet.getString("name");
-                System.out.println("teamname="+teamName);
-                //teamId = resultSet.getInt("team_id");
-                //players.add(new Player(playerId, playerName, teamId));
-           // }
-
-            return Response.ok(teamName).build();
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("teamName", teamName);
+                return Response.ok(jsonObject.toString()).build();
+            } else {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -82,7 +81,9 @@ public class TeamResources {
         }
     }
 
-    //methode pour recuperer les joueurs d'une équipe
+
+
+//methode pour recuperer les joueurs d'une équipe
     @Path("/{id}/players")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
