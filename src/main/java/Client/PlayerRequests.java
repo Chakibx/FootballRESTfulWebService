@@ -14,6 +14,7 @@ public class PlayerRequests {
     private String name;
     private int teamId;
     private int id;
+    private int rating;
 
     @Override
     public String toString() {
@@ -21,6 +22,7 @@ public class PlayerRequests {
                 "name='" + name + '\'' +
                 ", teamId=" + teamId +
                 ", id=" + id +
+                ", rating=" + rating +
                 '}';
     }
 
@@ -35,14 +37,19 @@ public class PlayerRequests {
     public int getTeamId() {
         return teamId;
     }
+    public int getRating() {
+        return teamId;
+    }
 
     public PlayerRequests(){
 
     }
-    public PlayerRequests(String name, int teamId) {
+    public PlayerRequests(String name, int teamId, int rating) {
         this.name = name;
         this.teamId = teamId;
+        this.rating = rating;
     }
+
     //------------------------------------------------------------------------------------------------------------------
     public static PlayerRequests createPlayer() {
         Scanner scanner = new Scanner(System.in);
@@ -50,13 +57,15 @@ public class PlayerRequests {
         String name = scanner.nextLine();
         System.out.println("Enter player team ID: ");
         int teamId = scanner.nextInt();
+        System.out.println("Enter player rating: ");
+        int rating = scanner.nextInt();
         scanner.nextLine(); // to consume the new line character after the integer input
 
-        return new PlayerRequests(name, teamId);
+        return new PlayerRequests(name, teamId, rating);
     }
 
-    public String toJson() {
-        return "{\"name\": \"" + name + "\", \"teamId\": " + teamId + "}";
+    public String toJson(){
+        return "{\"name\": \"" + name + "\", \"teamId\": " + teamId + ", \"rating\": " + rating + "}";
     }
 
     public void savePlayer() {
@@ -70,7 +79,6 @@ public class PlayerRequests {
                     .post(Entity.json(json));
 
             String output = response.readEntity(String.class);
-            System.out.println("Output from Server .... \n" + output);
 
             client.close();
         } catch (Exception e) {
@@ -129,7 +137,7 @@ public class PlayerRequests {
     public static void displayAllPlayers() {
         List<PlayerRequests> players = PlayerRequests.getAllPlayers();
         for (PlayerRequests player : players) {
-            System.out.println("ID: " + player.getId() + ", Name: " + player.getName() + ", Team ID: "+player.getTeamId());
+            System.out.println("ID: " + player.getId() + ", Name: " + player.getName() + ", Team ID: "+player.getTeamId() + ", Rating:" + player.getRating());
         }
     }
     //------------------------------------------------------------------------------------------------------------------

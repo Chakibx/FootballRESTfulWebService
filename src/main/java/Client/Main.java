@@ -11,7 +11,7 @@ public class Main {
         System.out.println("Bienvenue dans l'application de gestion des équipes de football!\n");
         while (true) {
             System.out.println("Sélectionnez une option:");
-            System.out.println("1. commencer un match");
+            System.out.println("0. Commencer un match");
             System.out.println("1. Afficher toutes les équipe");
             System.out.println("2. Afficher tous les joueurs");
             System.out.println("3. Afficher tous les joueurs d'une équipe");
@@ -27,6 +27,9 @@ public class Main {
             scanner.nextLine(); // pour consommer le retour à la ligne
 
             switch (choix) {
+                case 0:
+
+                    break;
                 case 1:
                     TeamRequests.displayAllTeams();
                     break;
@@ -48,7 +51,7 @@ public class Main {
                     TeamRequests.addPlayerToTeam();
                     break;
                 case 7:
-                    //
+                    PlayerRequests.updatePlayer();
                     break;
                 case 8:
                     //
