@@ -5,6 +5,7 @@ import java.util.Scanner;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -129,6 +130,28 @@ public class PlayerRequests {
         List<PlayerRequests> players = PlayerRequests.getAllPlayers();
         for (PlayerRequests player : players) {
             System.out.println("ID: " + player.getId() + ", Name: " + player.getName() + ", Team ID: "+player.getTeamId());
+        }
+    }
+    //------------------------------------------------------------------------------------------------------------------
+    public static void deletePlayerFromConsole() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the id of the player to delete:");
+        int playerId = scanner.nextInt();
+        scanner.close();
+
+        try {
+            Client client = ClientBuilder.newClient();
+            WebTarget target = client.target("http://localhost:8080/ws/webapi/players/" + playerId);
+            Response response = target.request().delete();
+            if (response.getStatus() == Response.Status.NO_CONTENT.getStatusCode()) {
+                System.out.println("Player deleted successfully.");
+            } else if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode()) {
+                System.out.println("Player not found.");
+            } else {
+                System.err.println("Error deleting player. Status code: " + response.getStatus());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
