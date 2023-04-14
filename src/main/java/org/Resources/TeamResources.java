@@ -68,6 +68,7 @@ public class TeamResources {
             //while (resultSet.next()) {
                 //int playerId = resultSet.getInt("id");
                 String teamName = resultSet.getString("name");
+                System.out.println("teamname="+teamName);
                 //teamId = resultSet.getInt("team_id");
                 //players.add(new Player(playerId, playerName, teamId));
            // }
