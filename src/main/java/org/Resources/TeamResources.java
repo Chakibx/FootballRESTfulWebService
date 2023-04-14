@@ -25,7 +25,7 @@ public class TeamResources {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllTeams() {
        try{
-           Class.forName("com.mysql.jdbc.Driver");
+           Class.forName("com.mysql.cj.jdbc.Driver");
            Connection connection = DriverManager.getConnection(url, user, password);
            PreparedStatement statement = connection.prepareStatement("SELECT * FROM teams");
            ResultSet rs = statement.executeQuery();
@@ -53,13 +53,41 @@ public class TeamResources {
        }
     }
 
+    @Path("/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTeam(@PathParam("id") int teamId) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, user, password);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM teams WHERE team_id = ?");
+            statement.setInt(1, teamId);
+            ResultSet resultSet = statement.executeQuery();
+
+            //List<Player> players = new ArrayList<>();
+            //while (resultSet.next()) {
+                //int playerId = resultSet.getInt("id");
+                String teamName = resultSet.getString("name");
+                //teamId = resultSet.getInt("team_id");
+                //players.add(new Player(playerId, playerName, teamId));
+           // }
+
+            return Response.ok(teamName).build();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //methode pour recuperer les joueurs d'une équipe
     @Path("/{id}/players")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTeamPlayers(@PathParam("id") int teamId) {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, user, password);
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM players WHERE team_id = ?");
             statement.setInt(1, teamId);
@@ -82,7 +110,7 @@ public class TeamResources {
         }
     }
 
-    //amethode pour ajouter une équipe
+    //methode pour ajouter une équipe
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -92,7 +120,7 @@ public class TeamResources {
             Team team = gson.fromJson(json, Team.class);
 
             // Charger le driver JDBC pour MySQL
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
             // Créer une connexion à la base de données
             Connection conn = DriverManager.getConnection(url, user, password);
@@ -130,7 +158,7 @@ public class TeamResources {
     public Response addPlayerToTeam(@PathParam("teamId") int teamId, @PathParam("playerId") int playerId) {
         try {
             // Charger le driver JDBC pour MySQL
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
             // Créer une connexion à la base de données
             Connection conn = DriverManager.getConnection(url, user, password);

@@ -136,7 +136,7 @@ public class TeamRequests {
         }
         return players;
     }
-
+    /*
     public static void displayTeamPlayersFromUserInput() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter team ID: ");
@@ -146,5 +146,36 @@ public class TeamRequests {
             //System.out.println(player.toString());
             System.out.println("ID: " + player.getId() + ", Name: " + player.getName());
         }
+    }
+    */
+    public static void displayTeamPlayersFromUserInput() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter team ID: ");
+        int teamId = scanner.nextInt();
+        List<PlayerRequests> players = getTeamPlayers(teamId);
+        String teamName = getTeamName(teamId);
+        System.out.println("Team name: " + teamName);
+        for (PlayerRequests player : players) {
+            //System.out.println(player.toString());
+            System.out.println("ID: " + player.getId() + ", Name: " + player.getName());
+        }
+    }
+    //------------------------------------------------------------------------------------------------------------------
+    public static String getTeamName(int teamId) {
+        String teamName = "";
+        try {
+            Client client = ClientBuilder.newClient();
+            WebTarget target = client.target("http://localhost:8080/ws/webapi/teams/" + teamId);
+            Response response = target.request(MediaType.APPLICATION_JSON).get();
+            if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+                TeamRequests team = response.readEntity(TeamRequests.class);
+                teamName = team.getName();
+            } else {
+                System.err.println("Error getting team name. Status code: " + response.getStatus());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return teamName;
     }
 }

@@ -139,7 +139,7 @@ public class PlayerResources {
             throw new RuntimeException(e);
         }
     }
-    /*
+
     // Méthode pour supprimer un joueur
     @Path("/{id}")
     @DELETE
@@ -161,6 +161,6 @@ public class PlayerResources {
             throw new RuntimeException(e);
         }
     }
-    */
+
 }
 
