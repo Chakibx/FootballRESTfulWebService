@@ -16,21 +16,18 @@ public class TeamRequests {
     public String getName() {
         return name;
     }
-
     public Integer getId() {
         return id;
     }
-
     private String name;
     private Integer id;
 
     public TeamRequests(){
-
     }
     public TeamRequests(String name) {
         this.name = name;
     }
-
+    //------------------------------------------------------------------------------------------------------------------
     public static TeamRequests createTeam() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Team name: ");
@@ -61,7 +58,7 @@ public class TeamRequests {
             e.printStackTrace();
         }
     }
-
+    //------------------------------------------------------------------------------------------------------------------
         public static int readPlayerIdFromInput() {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Enter player ID: ");
@@ -77,7 +74,6 @@ public class TeamRequests {
             scanner.nextLine(); // consommer le caractère de nouvelle ligne
             return teamId;
         }
-
 
 
     public static void addPlayerToTeam() {
@@ -99,7 +95,7 @@ public class TeamRequests {
             e.printStackTrace();
         }
     }
-
+    //------------------------------------------------------------------------------------------------------------------
     public static List<TeamRequests> getAllTeams() {
         Client client = ClientBuilder.newClient();
 
@@ -123,7 +119,7 @@ public class TeamRequests {
             System.out.println("ID: " + team.getId() + ", Name: " + team.getName());
         }
     }
-
+    //------------------------------------------------------------------------------------------------------------------
     public static List<PlayerRequests> getTeamPlayers(int teamId) {
         List<PlayerRequests> players = new ArrayList<>();
         try {
@@ -140,7 +136,6 @@ public class TeamRequests {
         }
         return players;
     }
-
 
     public static void displayTeamPlayersFromUserInput() {
         Scanner scanner = new Scanner(System.in);
