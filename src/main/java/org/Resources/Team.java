@@ -8,7 +8,7 @@ package org.Resources;
 /**
  * @author Chakib MOUSSAOUI
  * @author Ayoub SALAH
- * @class Team
+ * @class Team class
  * @brief Représente une équipe
  */
 public class Team {
