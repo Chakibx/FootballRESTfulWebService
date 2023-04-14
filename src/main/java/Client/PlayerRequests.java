@@ -160,4 +160,27 @@ public class PlayerRequests {
             e.printStackTrace();
         }
     }
+
+    //------------------------------------------------------------------------------------------------------------------
+    public void getPlayerById() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter player ID: ");
+        int playerId = scanner.nextInt();
+        scanner.nextLine(); // consomme la fin de ligne après la saisie du nombre
+
+        Client client = ClientBuilder.newClient();
+        Response response = client.target("http://localhost:8080/api/players/" + playerId)
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+
+        if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+            PlayerRequests player = response.readEntity(PlayerRequests.class);
+            System.out.println(player);
+        } else if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode()) {
+            System.out.println("Player not found");
+        } else {
+            System.out.println("Error retrieving player");
+        }
+    }
+
 }
