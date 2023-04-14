@@ -23,12 +23,12 @@ public class Main {
             scanner.nextLine(); // pour consommer le retour à la ligne
 
             switch (choix) {
-                case 2:
+                case 3:
                     System.out.print("Entrez le nom de l'équipe: ");
                     String nomEquipe = scanner.nextLine();
                     // Appeler la méthode pour créer une équipe
                     break;
-                case 3:
+                case 4:
                     System.out.print("Entrez le nom du joueur: ");
                     String nomJoueur = scanner.nextLine();
                     System.out.print("Entrez l'id de l'équipe du joueur: ");
@@ -36,21 +36,21 @@ public class Main {
                     PlayerRequests player = PlayerRequests.createPlayer();
                     player.savePlayer();
                     break;
-                case 4:
+                case 5:
                     System.out.print("Entrez le nom de l'équipe: ");
                     nomEquipe = scanner.nextLine();
                     System.out.print("Entrez le nom du joueur: ");
                     nomJoueur = scanner.nextLine();
                     //TeamRequests.addPlayerToTeam();
                     break;
-                case 5:
+                case 6:
                     System.out.print("Entrez le nom de l'équipe: ");
                     nomEquipe = scanner.nextLine();
                     System.out.print("Entrez le nom du joueur: ");
                     nomJoueur = scanner.nextLine();
                     // Appeler la méthode pour supprimer un joueur d'une équipe
                     break;
-                case 6:
+                case 7:
                     System.out.print("Entrez le nom du joueur: ");
                     nomJoueur = scanner.nextLine();
                     System.out.print("Entrez la statistique à modifier (ex: 'buts', 'passes décisives'): ");
@@ -59,7 +59,7 @@ public class Main {
                     int valeur = scanner.nextInt();
                     // Appeler la méthode pour modifier les statistiques d'un joueur
                     break;
-                case 7:
+                case 8:
                     System.out.println("Merci d'avoir utilisé l'application!");
                     System.exit(0);
                     break;
