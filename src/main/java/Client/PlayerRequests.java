@@ -162,7 +162,7 @@ public class PlayerRequests {
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    public void getPlayerById() {
+    public static void getPlayerById() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter player ID: ");
         int playerId = scanner.nextInt();
