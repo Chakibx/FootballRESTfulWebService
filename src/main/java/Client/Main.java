@@ -3,32 +3,7 @@ package Client;
 public class Main {
     public static void main(String[] args) {
 
-
-        PlayerCreation player = PlayerCreation.createPlayer();
-        player.savePlayer();
-
-        /*try {
-            Client client = ClientBuilder.newClient();
-
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter player name: ");
-            String name = scanner.nextLine();
-            System.out.println("Enter player team ID: ");
-            int teamId = scanner.nextInt();
-            scanner.nextLine(); // to consume the new line character after the integer input
-
-            String json = "{\"name\": \"" + name + "\", \"teamId\": " + teamId + "}";
-            Response response = client.target("http://localhost:8080/ws/webapi/players")
-                    .request(MediaType.APPLICATION_JSON)
-                    .post(Entity.json(json));
-
-            String output = response.readEntity(String.class);
-            System.out.println("Output from Server .... \n" + output);
-
-            client.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
+        TeamCreation.addPlayerToTeam();
     }
 }
 
@@ -65,7 +40,8 @@ public class Main {
                     String nomJoueur = scanner.nextLine();
                     System.out.print("Entrez l'id de l'équipe du joueur: ");
                     int ageJoueur = scanner.nextInt();
-                    // Appeler la méthode pour créer un joueur
+                    PlayerCreation player = PlayerCreation.createPlayer();
+                    player.savePlayer();
                     break;
                 case 3:
                     System.out.print("Entrez le nom de l'équipe: ");
