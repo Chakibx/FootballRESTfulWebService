@@ -1,25 +1,40 @@
 package Client;
 
+import java.util.List;
 import java.util.Scanner;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-public class PlayerCreation {
+public class PlayerRequests {
     private String name;
     private int teamId;
+    private int id;
 
-    public PlayerCreation(){
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public PlayerRequests(){
 
     }
-    public PlayerCreation(String name, int teamId) {
+    public PlayerRequests(String name, int teamId) {
         this.name = name;
         this.teamId = teamId;
     }
 
-    public static PlayerCreation createPlayer() {
+    public static PlayerRequests createPlayer() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter player name: ");
         String name = scanner.nextLine();
@@ -27,7 +42,7 @@ public class PlayerCreation {
         int teamId = scanner.nextInt();
         scanner.nextLine(); // to consume the new line character after the integer input
 
-        return new PlayerCreation(name, teamId);
+        return new PlayerRequests(name, teamId);
     }
 
     public String toJson() {
@@ -52,7 +67,6 @@ public class PlayerCreation {
             e.printStackTrace();
         }
     }
-
 
 
     public static int readPlayerIdFromInput() {
@@ -82,6 +96,31 @@ public class PlayerCreation {
             client.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+
+    public static List<PlayerRequests> getAllPlayers() {
+        Client client = ClientBuilder.newClient();
+
+        Response response = client.target("http://localhost:8080/ws/webapi/players")
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+
+        if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+            List<PlayerRequests> players = response.readEntity(new GenericType<List<PlayerRequests>>(){});
+            client.close();
+            return players;
+        } else {
+            System.out.println("Error getting players");
+            client.close();
+            return null;
+        }
+    }
+    public static void displayAllPlayers() {
+        List<PlayerRequests> players = PlayerRequests.getAllPlayers();
+        for (PlayerRequests player : players) {
+            System.out.println("ID: " + player.getId() + ", Name: " + player.getName() + ", Team ID: "+player.getTeamId());
         }
     }
 }

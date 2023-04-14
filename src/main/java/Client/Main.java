@@ -2,9 +2,9 @@ package Client;
 
 public class Main {
     public static void main(String[] args) {
-        TeamCreation.displayAllTeams();
-        //PlayerCreation.updatePlayer();
-        //TeamCreation.addPlayerToTeam();
+        //TeamRequests.displayAllTeams();
+        PlayerRequests.displayAllPlayers();
+        //TeamRequests.addPlayerToTeam();
     }
 }
 
@@ -41,7 +41,7 @@ public class Main {
                     String nomJoueur = scanner.nextLine();
                     System.out.print("Entrez l'id de l'équipe du joueur: ");
                     int ageJoueur = scanner.nextInt();
-                    PlayerCreation player = PlayerCreation.createPlayer();
+                    PlayerRequests player = PlayerRequests.createPlayer();
                     player.savePlayer();
                     break;
                 case 3:
@@ -49,7 +49,7 @@ public class Main {
                      nomEquipe = scanner.nextLine();
                     System.out.print("Entrez le nom du joueur: ");
                      nomJoueur = scanner.nextLine();
-                    //TeamCreation.addPlayerToTeam();
+                    //TeamRequests.addPlayerToTeam();
                     break;
                 case 4:
                     System.out.print("Entrez le nom de l'équipe: ");

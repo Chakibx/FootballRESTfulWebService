@@ -10,7 +10,7 @@ import jakarta.ws.rs.core.Response;
 import java.util.List;
 import java.util.Scanner;
 
-public class TeamCreation {
+public class TeamRequests {
     public String getName() {
         return name;
     }
@@ -22,19 +22,19 @@ public class TeamCreation {
     private String name;
     private Integer id;
 
-    public TeamCreation(){
+    public TeamRequests(){
 
     }
-    public TeamCreation(String name) {
+    public TeamRequests(String name) {
         this.name = name;
     }
 
-    public static TeamCreation createTeam() {
+    public static TeamRequests createTeam() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Team name: ");
         String name = scanner.nextLine();
 
-        return new TeamCreation(name);
+        return new TeamRequests(name);
     }
 
     public String toJson() {
@@ -98,7 +98,7 @@ public class TeamCreation {
         }
     }
 
-    public static List<TeamCreation> getAllTeams() {
+    public static List<TeamRequests> getAllTeams() {
         Client client = ClientBuilder.newClient();
 
         Response response = client.target("http://localhost:8080/ws/webapi/teams")
@@ -106,7 +106,7 @@ public class TeamCreation {
                 .get();
 
         if (response.getStatus() == Response.Status.OK.getStatusCode()) {
-            List<TeamCreation> teams = response.readEntity(new GenericType<List<TeamCreation>>(){});
+            List<TeamRequests> teams = response.readEntity(new GenericType<List<TeamRequests>>(){});
             client.close();
             return teams;
         } else {
@@ -116,8 +116,8 @@ public class TeamCreation {
         }
     }
     public static void displayAllTeams() {
-        List<TeamCreation> teams = TeamCreation.getAllTeams();
-        for (TeamCreation team : teams) {
+        List<TeamRequests> teams = TeamRequests.getAllTeams();
+        for (TeamRequests team : teams) {
             System.out.println("ID: " + team.getId() + ", Name: " + team.getName());
         }
     }
