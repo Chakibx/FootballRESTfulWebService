@@ -1,18 +1,13 @@
 package Client;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.Scanner;
-
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
-import jakarta.ws.rs.client.Entity;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-
 public class Main {
     public static void main(String[] args) {
-        try {
+
+
+        PlayerCreation player = PlayerCreation.createPlayer();
+        player.savePlayer();
+
+        /*try {
             Client client = ClientBuilder.newClient();
 
             Scanner scanner = new Scanner(System.in);
@@ -33,7 +28,7 @@ public class Main {
             client.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }
 
@@ -68,7 +63,7 @@ public class Main {
                 case 2:
                     System.out.print("Entrez le nom du joueur: ");
                     String nomJoueur = scanner.nextLine();
-                    System.out.print("Entrez l'âge du joueur: ");
+                    System.out.print("Entrez l'id de l'équipe du joueur: ");
                     int ageJoueur = scanner.nextInt();
                     // Appeler la méthode pour créer un joueur
                     break;
@@ -104,7 +99,6 @@ public class Main {
                     break;
             }
         }
-
     }
 }
 */
