@@ -42,7 +42,7 @@ public class PlayerRequests {
         this.name = name;
         this.teamId = teamId;
     }
-
+    //------------------------------------------------------------------------------------------------------------------
     public static PlayerRequests createPlayer() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter player name: ");
@@ -77,7 +77,7 @@ public class PlayerRequests {
         }
     }
 
-
+    //------------------------------------------------------------------------------------------------------------------
     public static int readPlayerIdFromInput() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter player ID: ");
@@ -107,8 +107,7 @@ public class PlayerRequests {
             e.printStackTrace();
         }
     }
-
-
+    //------------------------------------------------------------------------------------------------------------------
     public static List<PlayerRequests> getAllPlayers() {
         Client client = ClientBuilder.newClient();
 
