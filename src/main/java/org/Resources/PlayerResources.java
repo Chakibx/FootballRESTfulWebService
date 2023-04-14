@@ -34,7 +34,9 @@ public class PlayerResources {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 int teamId = resultSet.getInt("team_id");
-                Player player = new Player(id, name, teamId);
+                int rating = resultSet.getInt("rating");
+
+                Player player = new Player(id, name, teamId, rating);
                 players.add(player);
             }
             // Retourner la liste d'équipes en tant que réponse
@@ -62,7 +64,9 @@ public class PlayerResources {
             if (resultSet.next()){
                 String name = resultSet.getString("name");
                 int teamId = resultSet.getInt("team_id");
-                Player player = new Player(playerId, name, teamId);
+                int rating = resultSet.getInt("rating");
+
+                Player player = new Player(playerId, name, teamId, rating);
                 return Response.ok(player).build();
             } else {
                 return Response.status(Response.Status.NOT_FOUND).entity("Player not found").build();

@@ -68,7 +68,7 @@ public class TeamResources {
             if (resultSet.next()) {
                 String teamName = resultSet.getString("name");
                 JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("teamName", teamName);
+                jsonObject.addProperty("name", teamName);
                 return Response.ok(jsonObject.toString()).build();
             } else {
                 return Response.status(Response.Status.NOT_FOUND).build();
@@ -100,7 +100,9 @@ public class TeamResources {
                 int playerId = resultSet.getInt("id");
                 String playerName = resultSet.getString("name");
                 teamId = resultSet.getInt("team_id");
-                players.add(new Player(playerId, playerName, teamId));
+                int rating = resultSet.getInt("rating");
+
+                players.add(new Player(playerId, playerName, teamId,rating));
             }
 
             return Response.ok(players).build();

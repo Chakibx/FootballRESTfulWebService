@@ -38,7 +38,7 @@ public class PlayerRequests {
         return teamId;
     }
     public int getRating() {
-        return teamId;
+        return rating;
     }
 
     public PlayerRequests(){
@@ -85,7 +85,6 @@ public class PlayerRequests {
             e.printStackTrace();
         }
     }
-
     //------------------------------------------------------------------------------------------------------------------
     public static int readPlayerIdFromInput() {
         Scanner scanner = new Scanner(System.in);
@@ -145,7 +144,6 @@ public class PlayerRequests {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the id of the player to delete:");
         int playerId = scanner.nextInt();
-        scanner.close();
 
         try {
             Client client = ClientBuilder.newClient();

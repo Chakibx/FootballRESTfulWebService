@@ -1,26 +1,36 @@
 package org.Resources;
 
 public class Player {
+    private int rating;
     private int id;
     private String name;
     private int teamId;
 
-    public Player(int id, String name, int teamId) {
+    public Player(int id, String name, int teamId, int rating) {
         this.id = id;
         this.name = name;
         this.teamId = teamId;
+        this.rating = rating;
     }
 
     @Override
     public String toString() {
         return "Player{" +
-                "id=" + id +
+                "rating=" + rating +
+                ", id=" + id +
                 ", name='" + name + '\'' +
                 ", teamId=" + teamId +
                 '}';
     }
 
-    // Getters and Setters
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
     public int getId() {
         return id;
     }
