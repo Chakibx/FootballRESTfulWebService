@@ -2,8 +2,8 @@ package Client;
 
 public class Main {
     public static void main(String[] args) {
-
-        PlayerCreation.updatePlayer();
+        TeamCreation.displayAllTeams();
+        //PlayerCreation.updatePlayer();
         //TeamCreation.addPlayerToTeam();
     }
 }

@@ -3,13 +3,24 @@ package Client;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class TeamCreation {
+    public String getName() {
+        return name;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
     private String name;
+    private Integer id;
 
     public TeamCreation(){
 
@@ -84,6 +95,30 @@ public class TeamCreation {
             client.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static List<TeamCreation> getAllTeams() {
+        Client client = ClientBuilder.newClient();
+
+        Response response = client.target("http://localhost:8080/ws/webapi/teams")
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+
+        if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+            List<TeamCreation> teams = response.readEntity(new GenericType<List<TeamCreation>>(){});
+            client.close();
+            return teams;
+        } else {
+            System.out.println("Error getting teams");
+            client.close();
+            return null;
+        }
+    }
+    public static void displayAllTeams() {
+        List<TeamCreation> teams = TeamCreation.getAllTeams();
+        for (TeamCreation team : teams) {
+            System.out.println("ID: " + team.getId() + ", Name: " + team.getName());
         }
     }
 }
