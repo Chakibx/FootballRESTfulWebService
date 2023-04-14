@@ -52,4 +52,36 @@ public class PlayerCreation {
             e.printStackTrace();
         }
     }
+
+
+
+    public static int readPlayerIdFromInput() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter player ID: ");
+        int playerId = scanner.nextInt();
+        scanner.nextLine(); // consommer le caractère de nouvelle ligne
+        return playerId;
+    }
+    public static void updatePlayer() {
+        try {
+            int playerId = readPlayerIdFromInput();
+            Client client = ClientBuilder.newClient();
+
+            Response response = client.target("http://localhost:8080/ws/webapi/players/" + playerId)
+                    .request(MediaType.APPLICATION_JSON)
+                    .put(Entity.json("{\"teamId\": null}"));
+
+            if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+                System.out.println("Player updated successfully.");
+            } else if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode()) {
+                System.out.println("Player not found.");
+            } else {
+                System.out.println("Failed to update player.");
+            }
+
+            client.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -3,7 +3,8 @@ package Client;
 public class Main {
     public static void main(String[] args) {
 
-        TeamCreation.addPlayerToTeam();
+        PlayerCreation.updatePlayer();
+        //TeamCreation.addPlayerToTeam();
     }
 }
 
@@ -48,7 +49,7 @@ public class Main {
                      nomEquipe = scanner.nextLine();
                     System.out.print("Entrez le nom du joueur: ");
                      nomJoueur = scanner.nextLine();
-                    // Appeler la méthode pour ajouter un joueur à une équipe
+                    //TeamCreation.addPlayerToTeam();
                     break;
                 case 4:
                     System.out.print("Entrez le nom de l'équipe: ");

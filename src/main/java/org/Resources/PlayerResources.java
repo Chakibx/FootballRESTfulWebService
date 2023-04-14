@@ -46,6 +46,33 @@ public class PlayerResources {
             throw new RuntimeException(e);
         }
     }
+    //methode pour recuperer un joueur
+    @Path("/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPlayer(@PathParam("id") int playerId) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, user, password);
+            String query = "SELECT * FROM players WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, playerId);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()){
+                String name = resultSet.getString("name");
+                int teamId = resultSet.getInt("team_id");
+                Player player = new Player(playerId, name, teamId);
+                return Response.ok(player).build();
+            } else {
+                return Response.status(Response.Status.NOT_FOUND).entity("Player not found").build();
+            }
+        } catch (SQLException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error retrieving player").build();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     // Méthode pour ajouter un joueur
     @POST
@@ -83,7 +110,36 @@ public class PlayerResources {
         }
     }
 
+    @PUT
+    @Path("/{playerId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updatePlayer(@PathParam("playerId") int playerId) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
 
+            // Connexion à la base de données
+            Connection conn = DriverManager.getConnection(url, user, password);
+
+            // Requête SQL pour mettre à jour le joueur en mettant son teamId à null
+            String sql = "UPDATE players SET team_id = NULL WHERE id = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, playerId);
+            int rowsUpdated = statement.executeUpdate();
+            statement.close();
+            conn.close();
+
+            if (rowsUpdated > 0) {
+                return Response.status(Response.Status.OK).build();
+            } else {
+                return Response.status(Response.Status.NOT_FOUND).entity("Player not found").build();
+            }
+        } catch (SQLException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Failed to update player in database").build();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    /*
     // Méthode pour supprimer un joueur
     @Path("/{id}")
     @DELETE
@@ -105,32 +161,6 @@ public class PlayerResources {
             throw new RuntimeException(e);
         }
     }
-    //methode pour recuperer un joueur
-    @Path("/{id}")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getPlayer(@PathParam("id") int playerId) {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(url, user, password);
-            String query = "SELECT * FROM players WHERE id = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, playerId);
-
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()){
-                String name = resultSet.getString("name");
-                int teamId = resultSet.getInt("team_id");
-                Player player = new Player(playerId, name, teamId);
-                return Response.ok(player).build();
-            } else {
-                return Response.status(Response.Status.NOT_FOUND).entity("Player not found").build();
-            }
-        } catch (SQLException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error retrieving player").build();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    */
 }
 
